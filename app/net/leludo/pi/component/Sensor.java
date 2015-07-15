@@ -3,7 +3,6 @@ package net.leludo.pi.component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 public class Sensor {
 
