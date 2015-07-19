@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.leludo.pi.component.ComponentFactory;
 import net.leludo.pi.component.Led;
 import net.leludo.pi.component.PiPins;
-import net.leludo.pi.component.Sensor;
+import net.leludo.pi.component.TempSensor;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -41,7 +41,7 @@ public class JsonController extends Controller
     }
     
     public static Result sensor() throws IOException {
-    	String temp = new Sensor().read() ;
+    	String temp = new TempSensor().read() ;
     	ObjectNode result = Json.newObject() ;
     	result.put("temp", temp) ;
     	return ok(result) ;    	

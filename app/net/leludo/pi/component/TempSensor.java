@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Sensor {
+public class TempSensor {
 
 	BufferedReader br ;
 	
-	public Sensor() throws IOException {		
+	public TempSensor() throws IOException {		
 	}
 	
 	
