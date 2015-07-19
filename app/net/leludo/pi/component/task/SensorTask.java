@@ -52,7 +52,7 @@ public class SensorTask<T extends MockSensor> extends TimerTask {
 		} catch (SQLException e) {
 			Logger.error("Persitence problem !", e);
 		} catch (SensorException e) {
-			e.printStackTrace();
+			Logger.error("Sensor problem !", e);
 		}
 
 	}
