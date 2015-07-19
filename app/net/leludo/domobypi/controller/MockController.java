@@ -1,13 +1,14 @@
 package net.leludo.domobypi.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import net.leludo.pi.component.MockSensor;
 import net.leludo.pi.component.mock.Led;
 import net.leludo.pi.component.mock.SensorWebSocketMock;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
-
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 
@@ -35,6 +36,6 @@ public class MockController extends Controller
     }
 
     public static WebSocket<String> socket() {		
-		return new SensorWebSocketMock() ;
+		return new SensorWebSocketMock<MockSensor>(new MockSensor()) ;
 	}
 }
