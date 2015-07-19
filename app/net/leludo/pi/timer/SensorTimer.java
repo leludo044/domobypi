@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.TimerTask;
 
 import net.leludo.pi.component.SensorException;
-import net.leludo.pi.component.TempSensor;
+import net.leludo.pi.component.TemperatureSensor;
 import play.mvc.WebSocket.Out;
 
 public class SensorTimer extends TimerTask {
@@ -25,7 +25,7 @@ public class SensorTimer extends TimerTask {
 	public void run() {
 		try {
 			date = new Date().getTime() ;
-			temp = new TempSensor().read();
+			temp = new TemperatureSensor().read();
 			StringBuffer sb = new StringBuffer() ;
 			sb.append("{") ;
 			sb.append("\"").append("id").append("\"") ;

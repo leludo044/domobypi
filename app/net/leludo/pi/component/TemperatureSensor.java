@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class TempSensor extends MockSensor {
+public class TemperatureSensor extends MockSensor {
 
 	BufferedReader br;
 
-	public TempSensor() {
+	public TemperatureSensor() {
 		super() ;
 	}
 

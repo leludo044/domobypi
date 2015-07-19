@@ -1,4 +1,4 @@
-package net.leludo.pi.component.mock;
+package net.leludo.pi.component.task;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -10,7 +10,7 @@ import net.leludo.pi.component.SensorException;
 import play.Logger;
 import play.mvc.WebSocket.Out;
 
-public class SensorTimerMock<T extends MockSensor> extends TimerTask {
+public class SensorTask<T extends MockSensor> extends TimerTask {
 
 	String name;
 	String temp;
@@ -20,7 +20,7 @@ public class SensorTimerMock<T extends MockSensor> extends TimerTask {
 
 	Out<String> out;
 
-	public SensorTimerMock(T sensor, play.mvc.WebSocket.Out<String> arg1) {
+	public SensorTask(T sensor, play.mvc.WebSocket.Out<String> arg1) {
 		out = arg1;
 		temp = "unknown";
 		name = "Ludo";

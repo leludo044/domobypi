@@ -3,6 +3,7 @@ package net.leludo.pi.component.mock;
 import java.util.Timer;
 
 import net.leludo.pi.component.MockSensor;
+import net.leludo.pi.component.task.SensorTask;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.WebSocket;
@@ -14,7 +15,7 @@ public class SensorWebSocketMock extends WebSocket<String> {
 			WebSocket.Out<String> arg1) {
 		
 		final Timer t = new Timer("sensor");
-		t.schedule(new SensorTimerMock<MockSensor>(new MockSensor(), arg1), 0, 5000);
+		t.schedule(new SensorTask<MockSensor>(new MockSensor(), arg1), 0, 5000);
 		
 		// For each event received on the socket,
         	arg0.onMessage(new Callback<String>() {
