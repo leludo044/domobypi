@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.TimerTask;
 
 import net.leludo.domobypi.dao.MesureDao;
+import play.Logger;
 import play.mvc.WebSocket.Out;
 
 public class SensorTimerMock extends TimerTask {
@@ -15,7 +16,7 @@ public class SensorTimerMock extends TimerTask {
 	MesureDao dao ;
 	
 	Out<String> out ;
-
+	
 	public SensorTimerMock(play.mvc.WebSocket.Out<String> arg1) {
 		out = arg1 ;
 		temp = "unknown" ;
@@ -40,12 +41,12 @@ public class SensorTimerMock extends TimerTask {
 		sb.append("}");
 		
 		//System.out.println(sb.toString());
+		Logger.info(sb.toString());
 		out.write(sb.toString());
 		try {
 			dao.create(date, temp);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.error("Persitence problem !", e);
 		}
 		
 	}
