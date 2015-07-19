@@ -1,5 +1,5 @@
 var testConnectivity = {
-    serveur: "ludo1:9000",
+    serveur: "localhost:9000",
     ledstate: "/mock/ledstate",
     led: "/mock/led",
     websocket: "/mock/socket"
@@ -21,7 +21,7 @@ var internetConnectivity = {
 
 var domobypi = angular.module('domobyPi', [])
 
-domobypi.value("connect", internetConnectivity);
+domobypi.value("connect", testConnectivity);
 
 domobypi.config(
   ['$controllerProvider', function ($controllerProvider) {
