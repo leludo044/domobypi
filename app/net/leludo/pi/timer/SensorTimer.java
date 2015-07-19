@@ -1,9 +1,9 @@
 package net.leludo.pi.timer;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.TimerTask;
 
+import net.leludo.pi.component.SensorException;
 import net.leludo.pi.component.TempSensor;
 import play.mvc.WebSocket.Out;
 
@@ -39,7 +39,7 @@ public class SensorTimer extends TimerTask {
 			sb.append("}");
 			System.out.println(sb.toString());
 			out.write(sb.toString());
-		} catch (IOException e) {
+		} catch (SensorException e) {
 			e.printStackTrace();
 		}
 	}
