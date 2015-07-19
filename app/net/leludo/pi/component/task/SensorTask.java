@@ -46,7 +46,9 @@ public class SensorTask<T extends MockSensor> extends TimerTask {
 			sb.append("}");
 
 			// System.out.println(sb.toString());
-			Logger.info(sb.toString());
+			if (Logger.isDebugEnabled()) {
+				Logger.debug(sb.toString());
+			}
 			out.write(sb.toString());
 			dao.create(sensor.getType(), date, temp);
 		} catch (SQLException e) {
