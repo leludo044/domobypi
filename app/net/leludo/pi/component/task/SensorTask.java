@@ -48,7 +48,7 @@ public class SensorTask<T extends MockSensor> extends TimerTask {
 			// System.out.println(sb.toString());
 			Logger.info(sb.toString());
 			out.write(sb.toString());
-			dao.create(date, temp);
+			dao.create(sensor.getType(), date, temp);
 		} catch (SQLException e) {
 			Logger.error("Persitence problem !", e);
 		} catch (SensorException e) {

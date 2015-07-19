@@ -7,4 +7,9 @@ public class MockSensor implements Sensor {
 		return new Long(Math.round(20000+(Math.random()*5000))).toString();
 	}
 
+	@Override
+	public String getType() {
+		return "random";
+	}
+
 }

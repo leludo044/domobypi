@@ -13,9 +13,9 @@ import play.db.DB;
 public class MesureDao {
 	DataSource ds;
 
-	public void create(long date, String temp) throws SQLException {
+	public void create(String type, long date, String temp) throws SQLException {
 		ds = DB.getDataSource();
-		new JdbcSession(ds).clear().sql("insert into mesure values (?,?)").set(date).set(temp).insert(Outcome.VOID);
+		new JdbcSession(ds).clear().sql("insert into mesure (type, timestamp, value) values (?,?,?)").set(type).set(date).set(temp).insert(Outcome.VOID);
 
 	}
 }

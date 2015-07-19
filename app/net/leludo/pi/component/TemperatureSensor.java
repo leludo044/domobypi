@@ -6,6 +6,11 @@ import java.io.IOException;
 
 public class TemperatureSensor extends MockSensor {
 
+	@Override
+	public String getType() {
+		return "temperature";
+	}
+
 	BufferedReader br;
 
 	public TemperatureSensor() {
