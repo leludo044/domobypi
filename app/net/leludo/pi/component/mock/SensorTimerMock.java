@@ -1,8 +1,10 @@
 package net.leludo.pi.component.mock;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.TimerTask;
 
+import net.leludo.domobypi.dao.MesureDao;
 import play.mvc.WebSocket.Out;
 
 public class SensorTimerMock extends TimerTask {
@@ -10,6 +12,7 @@ public class SensorTimerMock extends TimerTask {
 	String name ;
 	String temp;
 	long date ;
+	MesureDao dao ;
 	
 	Out<String> out ;
 
@@ -17,6 +20,7 @@ public class SensorTimerMock extends TimerTask {
 		out = arg1 ;
 		temp = "unknown" ;
 		name = "Ludo";
+		dao = new MesureDao() ;
 	}
 
 	@Override
@@ -35,7 +39,14 @@ public class SensorTimerMock extends TimerTask {
 		sb.append(":").append(date);
 		sb.append("}");
 		
-		System.out.println(sb.toString());
+		//System.out.println(sb.toString());
 		out.write(sb.toString());
+		try {
+			dao.create(date, temp);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

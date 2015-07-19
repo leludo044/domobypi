@@ -12,3 +12,5 @@ libraryDependencies ++= Seq(
   cache,
   javaWs
 )
+
+libraryDependencies += "com.jcabi" % "jcabi-jdbc" % "0.15"
