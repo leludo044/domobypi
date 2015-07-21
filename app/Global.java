@@ -1,39 +1,36 @@
-import java.io.IOException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import net.leludo.domobypi.model.Module;
+import net.leludo.domobypi.bootstrap.ApplicationContext;
+import net.leludo.domobypi.bootstrap.ApplicationContextException;
 import play.Application;
-import play.Configuration;
 import play.GlobalSettings;
 import play.Logger;
+import play.libs.F.Promise;
+import play.mvc.Http.RequestHeader;
+import play.mvc.Result;
 
 public class Global extends GlobalSettings {
 
-	/** Nom du fichier de propriétés */
-	private static final String PROPERTY_FILENAME = "config.json";
+	/** Config file name */
+	private static final String CONFIG_FILENAME = "config.json";
+
 
 	/**
-	 * Sur événement de démarrage de l'application
+	 * On application startup
 	 * 
 	 * @param app
-	 *            l'application en cours de démarrage
+	 *            Current application
 	 */
 	@Override
 	public void onStart(Application app) {
 
 		Logger.info("Starting application (" + (app.isDev() ? "mode DEV" : "Mode PROD") + ")...");
-
-		ObjectMapper mapper = new ObjectMapper();
-		Module module;
+		
+		ApplicationContext ac = new ApplicationContext() ;
 		try {
-			module = mapper.readValue(app.resource(PROPERTY_FILENAME), Module.class);
-			Logger.debug("Module found : " + module);
-			Configuration conf = app.configuration();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			ac.load(app.resource(CONFIG_FILENAME));
+		} catch (ApplicationContextException e) {
+			Logger.error("Config file "+CONFIG_FILENAME+" reading problem : "+e.getMessage());
+			throw new RuntimeException(e);
+		}		
 	}
 
 	@Override
