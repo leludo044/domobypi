@@ -6,11 +6,12 @@ import java.util.List;
 public class Module {
 
 	private String id ;
-	private List<Sensor> sensors ;
+
+	private List<AbstractSensor> sensors ;
 
 	public Module() {
 		this.id = "undefined" ;
-		this.sensors = new ArrayList<Sensor>() ;
+		this.sensors = new ArrayList<AbstractSensor>() ;
 	}
 	
 	public String getId() {
@@ -32,11 +33,11 @@ public class Module {
 		return builder.toString();
 	}
 
-	public List<Sensor> getSensors() {
+	public List<AbstractSensor> getSensors() {
 		return sensors;
 	}
 
-	public void setSensors(List<Sensor> sensors) {
+	public void setSensors(List<AbstractSensor> sensors) {
 		this.sensors = sensors;
 	}
 

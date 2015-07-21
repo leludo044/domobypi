@@ -8,7 +8,14 @@
             "model":"inconnu",
             "min":15,
             "max":25
+        },
+        {
+            "id":"02",
+            "type":"random",
+            "frequency":5000,
+            "model":"inconnu",
+            "min":10,
+            "max":30
         }
     ]
- 
 }

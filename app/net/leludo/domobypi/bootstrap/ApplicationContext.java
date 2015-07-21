@@ -1,18 +1,14 @@
 package net.leludo.domobypi.bootstrap;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.Timer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.leludo.domobypi.model.Module;
-import play.Configuration;
+import net.leludo.domobypi.model.Sensor;
+import net.leludo.pi.component.task.SensorTask;
 import play.Logger;
 
 /**
@@ -43,18 +39,27 @@ public class ApplicationContext {
 
 		if (configFile != null) {
 			ObjectMapper mapper = new ObjectMapper();
-			Module module;
 			try {
 				module = mapper.readValue(configFile.openStream(), Module.class);
 				Logger.info("Module found : " + module);
 				if (!module.hasSensors()) {
 					throw new ApplicationContextException("No sensor for this module !");
+				} else {
+					start() ;
 				}
 			} catch (IOException e) {
 				throw new ApplicationContextException("Error while reading config.json", e);
 			}
 		} else {
 			throw new ApplicationContextException("Config file not found !");
+		}
+	}
+	
+	private void start() {
+		
+		for (Sensor sensor : this.module.getSensors()) {
+			final Timer t = new Timer("sensor-"+sensor.getId());
+			t.schedule(new SensorTask(sensor), 0, sensor.getFrequency());
 		}
 	}
 }
