@@ -1,0 +1,14 @@
+{
+    "id":"domobypi-hp",
+       "sensors":[
+        {
+            "id":"01",
+            "type":"random",
+            "frequency":10000,
+            "model":"inconnu",
+            "min":15,
+            "max":25
+        }
+    ]
+ 
+}
