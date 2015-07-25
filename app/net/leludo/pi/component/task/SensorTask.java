@@ -42,7 +42,9 @@ public class SensorTask extends TimerTask {
 				Logger.debug(message);
 			}
 			if (!this.sockets.isEmpty()) {
-				this.sockets.get(0).write(message);
+				for (Out<String> out : this.sockets) {					
+					out.write(message);
+				}
 			}
 			dao.create(sensor.getType(), date, temp);
 		} catch (SQLException e) {

@@ -12,6 +12,7 @@ import play.mvc.WebSocket;
 public class SensorWebSocketMock<T extends MockSensor> extends WebSocket<String> {
 
 	T sensor;
+	WebSocket.Out<String> registeredOut ;
 
 	public SensorWebSocketMock(T sensor) {
 		this.sensor = sensor;
@@ -21,7 +22,8 @@ public class SensorWebSocketMock<T extends MockSensor> extends WebSocket<String>
 	public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
 
 		Logger.info("Websocket connected.");
-		ApplicationContext.getInstance().register(out);
+		this.registeredOut = out ;
+		ApplicationContext.getInstance().register(this.registeredOut);
 		
 		//final Timer t = new Timer("sensor");
 		//t.schedule(new SensorTask<T>(this.sensor, out), 0, 5000);
@@ -39,6 +41,7 @@ public class SensorWebSocketMock<T extends MockSensor> extends WebSocket<String>
 		in.onClose(new Callback0() {
 			public void invoke() {
 				//t.cancel();
+				ApplicationContext.getInstance().unregister(registeredOut);
 				Logger.info("Websocket disconnected.");
 			}
 		});

@@ -80,6 +80,11 @@ public final class ApplicationContext {
 	
 	public void register(WebSocket.Out<String> ws) {
 		sockets.add(ws) ;
-		Logger.info(ws.toString());
+		Logger.info("Registering "+ws.toString());
+	}
+
+	public void unregister(WebSocket.Out<String> ws) {
+		this.sockets.remove(ws) ;
+		Logger.info("Unregistering "+ws.toString());
 	}
 }
