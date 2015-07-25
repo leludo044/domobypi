@@ -2,12 +2,14 @@ package net.leludo.pi.component.task;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.TimerTask;
 
 import net.leludo.domobypi.dao.MesureDao;
 import net.leludo.domobypi.model.Sensor;
 import net.leludo.pi.component.SensorException;
 import play.Logger;
+import play.mvc.WebSocket;
 import play.mvc.WebSocket.Out;
 
 public class SensorTask extends TimerTask {
@@ -18,18 +20,10 @@ public class SensorTask extends TimerTask {
 	MesureDao dao;
 	Sensor sensor;
 
-	Out<String> out;
+	List<WebSocket.Out<String>> sockets ;
 
-	public SensorTask(Sensor sensor, play.mvc.WebSocket.Out<String> arg1) {
-		out = arg1;
-		temp = "unknown";
-		name = "Ludo";
-		dao = new MesureDao();
-		this.sensor = sensor;
-	}
-
-	public SensorTask(Sensor sensor) {
-		out = null;
+	public SensorTask(Sensor sensor, List<WebSocket.Out<String>> sockets) {
+		this.sockets = sockets;
 		temp = "unknown";
 		name = "Ludo";
 		dao = new MesureDao();
@@ -39,16 +33,16 @@ public class SensorTask extends TimerTask {
 	@Override
 	public void run() {
 		date = new Date().getTime();
-		StringBuffer sb = new StringBuffer();
+		String message ;
 		try {
 			temp = sensor.read();
-
+			message = sensor.toJson(date, temp);
 			// System.out.println(sb.toString());
 			if (Logger.isDebugEnabled()) {
-				Logger.debug(sensor.toJson(date, temp));
+				Logger.debug(message);
 			}
-			if (out != null) {
-				out.write(sb.toString());
+			if (!this.sockets.isEmpty()) {
+				this.sockets.get(0).write(message);
 			}
 			dao.create(sensor.getType(), date, temp);
 		} catch (SQLException e) {

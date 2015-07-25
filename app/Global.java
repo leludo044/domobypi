@@ -24,7 +24,7 @@ public class Global extends GlobalSettings {
 
 		Logger.info("Starting application (" + (app.isDev() ? "mode DEV" : "Mode PROD") + ")...");
 		
-		ApplicationContext ac = new ApplicationContext() ;
+		ApplicationContext ac = ApplicationContext.getInstance() ;
 		try {
 			ac.load(app.resource(CONFIG_FILENAME));
 		} catch (ApplicationContextException e) {

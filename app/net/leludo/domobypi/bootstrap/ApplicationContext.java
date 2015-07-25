@@ -2,6 +2,8 @@ package net.leludo.domobypi.bootstrap;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,21 +12,27 @@ import net.leludo.domobypi.model.Module;
 import net.leludo.domobypi.model.Sensor;
 import net.leludo.pi.component.task.SensorTask;
 import play.Logger;
+import play.mvc.WebSocket;
 
 /**
  * Application context management
  *
  */
-public class ApplicationContext {
+public final class ApplicationContext {
 
+	static ApplicationContext instance ;
+	
+	List<WebSocket.Out<String>> sockets ;
+	
 	/** Module */
 	private Module module;
 
 	/**
 	 * Constructor
 	 */
-	public ApplicationContext() {
+	private ApplicationContext() {
 		module = new Module();
+		sockets = new ArrayList<WebSocket.Out<String>>() ;
 	}
 
 	/**
@@ -59,7 +67,19 @@ public class ApplicationContext {
 		
 		for (Sensor sensor : this.module.getSensors()) {
 			final Timer t = new Timer("sensor-"+sensor.getId());
-			t.schedule(new SensorTask(sensor), 0, sensor.getFrequency());
+			t.schedule(new SensorTask(sensor, this.sockets), 0, sensor.getFrequency());
 		}
+	}
+	
+	public static ApplicationContext getInstance() {
+		if (instance == null) {
+			instance = new ApplicationContext() ;
+		}
+		return instance ;
+	}
+	
+	public void register(WebSocket.Out<String> ws) {
+		sockets.add(ws) ;
+		Logger.info(ws.toString());
 	}
 }

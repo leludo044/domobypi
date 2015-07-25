@@ -2,6 +2,7 @@ package net.leludo.pi.component.mock;
 
 import java.util.Timer;
 
+import net.leludo.domobypi.bootstrap.ApplicationContext;
 import net.leludo.pi.component.MockSensor;
 import play.Logger;
 import play.libs.F.Callback;
@@ -20,7 +21,9 @@ public class SensorWebSocketMock<T extends MockSensor> extends WebSocket<String>
 	public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
 
 		Logger.info("Websocket connected.");
-		final Timer t = new Timer("sensor");
+		ApplicationContext.getInstance().register(out);
+		
+		//final Timer t = new Timer("sensor");
 		//t.schedule(new SensorTask<T>(this.sensor, out), 0, 5000);
 
 		// For each event received on the socket,
@@ -35,7 +38,7 @@ public class SensorWebSocketMock<T extends MockSensor> extends WebSocket<String>
 		// When the socket is closed.
 		in.onClose(new Callback0() {
 			public void invoke() {
-				t.cancel();
+				//t.cancel();
 				Logger.info("Websocket disconnected.");
 			}
 		});
