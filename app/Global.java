@@ -1,17 +1,16 @@
+import java.net.URL;
+
 import net.leludo.domobypi.bootstrap.ApplicationContext;
 import net.leludo.domobypi.bootstrap.ApplicationContextException;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import play.libs.F.Promise;
-import play.mvc.Http.RequestHeader;
-import play.mvc.Result;
 
 public class Global extends GlobalSettings {
 
 	/** Config file name */
-	private static final String CONFIG_FILENAME = "config.json";
-
+	private static final String CONFIG_DEV_FILENAME = "config_dev.json";
+	private static final String CONFIG_PROD_FILENAME = "config_prod.json";
 
 	/**
 	 * On application startup
@@ -23,14 +22,15 @@ public class Global extends GlobalSettings {
 	public void onStart(Application app) {
 
 		Logger.info("Starting application (" + (app.isDev() ? "mode DEV" : "Mode PROD") + ")...");
-		
-		ApplicationContext ac = ApplicationContext.getInstance() ;
+		String configFilename = app.isDev() ? CONFIG_DEV_FILENAME : CONFIG_PROD_FILENAME;
+		Logger.info("Config file " + configFilename + " expected.");
+		ApplicationContext ac = ApplicationContext.getInstance();
 		try {
-			ac.load(app.resource(CONFIG_FILENAME));
+			ac.load(app.resource(configFilename));
 		} catch (ApplicationContextException e) {
-			Logger.error("Config file "+CONFIG_FILENAME+" reading problem : "+e.getMessage());
+			Logger.error("Config file " + configFilename + " reading problem : " + e.getMessage());
 			throw new RuntimeException(e);
-		}		
+		}
 	}
 
 	@Override
