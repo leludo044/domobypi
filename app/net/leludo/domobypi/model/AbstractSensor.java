@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import net.leludo.pi.component.SensorException;
+import net.leludo.pi.component.TemperatureSensor;
 
 @JsonTypeInfo(  
 	    use = JsonTypeInfo.Id.NAME,  
 	    include = JsonTypeInfo.As.PROPERTY,  
 	    property = "type")  
 	@JsonSubTypes({  
-	    @Type(value = RandomSensor.class, name = "random")})
+	    @Type(value = RandomSensor.class, name = "random"),
+	    @Type(value = TemperatureSensor.class, name = "temperature")})
 public abstract class AbstractSensor implements Sensor {
 	private String id;
 	private String type;

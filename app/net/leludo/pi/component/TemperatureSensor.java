@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class TemperatureSensor extends MockSensor {
+import net.leludo.domobypi.model.AbstractSensor;
+
+public class TemperatureSensor extends AbstractSensor {
 
 	@Override
 	public String getType() {
@@ -12,10 +14,6 @@ public class TemperatureSensor extends MockSensor {
 	}
 
 	BufferedReader br;
-
-	public TemperatureSensor() {
-		super() ;
-	}
 
 	@Override
 	public String read() throws SensorException {
