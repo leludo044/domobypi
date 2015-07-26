@@ -16,4 +16,5 @@ GET		/mock/led/:switch			net.leludo.domobypi.controller.MockController.led(switc
 GET		/json/ledstate				net.leludo.domobypi.controller.JsonController.ledState()
 GET		/json/led/:switch			net.leludo.domobypi.controller.JsonController.led(switch: String)
 GET		/json/sensor				net.leludo.domobypi.controller.JsonController.sensor()
+GET		/json/sensors				net.leludo.domobypi.controller.ServiceController.sensors()
 GET		/socket						net.leludo.domobypi.controller.SocketController.socket()

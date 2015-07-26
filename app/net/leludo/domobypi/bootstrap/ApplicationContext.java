@@ -8,6 +8,7 @@ import java.util.Timer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.leludo.domobypi.model.AbstractSensor;
 import net.leludo.domobypi.model.Module;
 import net.leludo.domobypi.model.Sensor;
 import net.leludo.pi.component.task.SensorTask;
@@ -86,5 +87,10 @@ public final class ApplicationContext {
 	public void unregister(WebSocket.Out<String> ws) {
 		this.sockets.remove(ws) ;
 		Logger.info("Unregistering "+ws.toString());
+	}
+
+	public List<AbstractSensor> getSensors() {
+		return module.getSensors();
+		
 	}
 }
