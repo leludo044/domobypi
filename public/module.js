@@ -2,7 +2,7 @@ var testConnectivity = {
     serveur: "localhost:9000",
     ledstate: "/mock/ledstate",
     led: "/mock/led",
-    websocket: "/mock/socket"
+    websocket: "/socket"
 };
 
 var piConnectivity = {
