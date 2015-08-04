@@ -33,7 +33,12 @@
             <span class="label label-success">{{temp}}</span>
             <span class="label label-danger">{{maxTemp}}</span>
         </div>
-        <stats-temperature/>
+        <div class="row" ng-repeat="sensor in sensors">
+        	{{sensor.id}}
+		</div>
+        <div class="row" ng-repeat="sensor in sensors">
+        	<stats-temperature/>
+		</div>
     </div>
 
     <!--

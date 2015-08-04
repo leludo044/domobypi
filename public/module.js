@@ -79,6 +79,7 @@ angular.module('domobyPi').controller('LedController',
         $scope.date = null;
         $scope.minTemp = null;
         $scope.maxTemp = 0;
+        $scope.sensors = [] ;
 
         temperatureService.start($scope);
 
@@ -91,7 +92,10 @@ angular.module('domobyPi').controller('LedController',
             $scope.chart.series[0].addPoint(value);
             $scope.chart.redraw();
         }
-
+        
+        $http.get('http://' + connect.serveur + '/json/sensors').success(function (data) {
+                $scope.sensors = data;
+            });
     });
 
 angular.module('domobyPi').factory('temperatureService', function ($q, connect) {
