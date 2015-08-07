@@ -27,12 +27,6 @@
         <div class="well">
             Led is {{led}} <img src="/assets/images/Ball-red-64.png" ng-show="isOn()" /> <img src="/assets/images/Ball-blue-64.png" ng-hide="isOn()" />
         </div>
-        <h1>Temperature management</h1>
-        <div class="well">
-            <span class="label label-info">{{minTemp}}</span>
-            <span class="label label-success">{{temp}}</span>
-            <span class="label label-danger">{{maxTemp}}</span>
-        </div>
 		<div class="row" ng-repeat="sensor in sensors">
         	<stats-temperature sensor="sensor"/>
 		</div>

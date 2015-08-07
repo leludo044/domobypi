@@ -65,7 +65,7 @@ angular.module('domobyPi').controller('ChartCtrl',
 			};
 
 			this.update = function(measure) {
-				console.log("Receiving "+measure.temp+" on "+this.sensor.id);
+				//console.log("Receiving "+measure.temp+" on "+this.sensor.id);
 				var value = Math.round(measure.temp / 1000 * 100) / 100 ;
 				this.sensor.temps.push([measure.date, value]) ;
 				
@@ -79,13 +79,6 @@ angular.module('domobyPi').controller('ChartCtrl',
 				else if (value > this.sensor.max) {
 	                this.sensor.max = value;				
 				}
-				/*
-	            if (value < this.sensor.min) {
-	                $scope.minTemp = $scope.temp;
-	            } else if ($scope.temp > $scope.maxTemp) {
-	                $scope.maxTemp = $scope.temp;
-	            }
-	            */
 			}
 			
 		} );
