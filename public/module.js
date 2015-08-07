@@ -19,7 +19,7 @@ var internetConnectivity = {
     websocket: "/socket"
 };
 
-var domobypi = angular.module('domobyPi', [])
+var domobypi = angular.module('domobyPi', ["highcharts-ng"])
 
 domobypi.value("connect", testConnectivity);
 
@@ -60,8 +60,9 @@ angular.module('domobyPi').controller('LedController',
 
         $scope.temps = [];
 
-        $scope.updateTemp = function (sensor) {
-            $scope.temp = Math.round(sensor.temp / 1000 * 100) / 100;
+        $scope.updateTemp = function (measure) {
+        	console.log("Updating "+measure.id);
+            $scope.temp = measure.temp;
             $scope.temps.push($scope.temp);
             if ($scope.minTemp == null) {
                 $scope.minTemp = $scope.temp;
@@ -108,6 +109,7 @@ angular.module('domobyPi').factory('temperatureService', function ($q, connect) 
         var registeredScope = null;
         var ws = null;
         var isStarted = false;
+        var controllers = {} ;
 
         self.start = function (scope) {
             registeredScope = scope;
@@ -124,13 +126,14 @@ angular.module('domobyPi').factory('temperatureService', function ($q, connect) 
 
             ws.onmessage = function (message) {
 
-                sensor = JSON.parse(message.data);
-                date = new Date(sensor.date);
+                measure = JSON.parse(message.data);
+                date = new Date(measure.date);
                 registeredScope.$apply(function () {
-                    registeredScope.updateTemp(sensor);
+                    registeredScope.updateTemp(measure);
                 });
                 deffered.resolve(message);
-                console.log(sensor.temp + " at " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+                console.log(measure.temp + " at " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+               	controllers[measure.id].update(measure) ;
             }
 
             isStarted = true;
@@ -149,6 +152,11 @@ angular.module('domobyPi').factory('temperatureService', function ($q, connect) 
             //            return temp ;
             return deffered.promise;
         }
+        
+        self.register = function(ctrl) {
+        	console.log("Registration of "+ctrl.sensor.id);
+        	controllers[ctrl.sensor.id] = ctrl ;
+        } 
     }
 
     return new temperatureService();
