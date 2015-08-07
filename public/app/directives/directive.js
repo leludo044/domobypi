@@ -6,6 +6,6 @@ angular.module('domobyPi').directive('statsTemperature', function () {
         scope: {
 		      sensor: '=sensor'
 		    },
-        templateUrl: '/assets/sensor.html'
+        templateUrl: '/assets/app/views/sensor.html'
     };
 });
