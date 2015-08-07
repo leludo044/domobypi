@@ -15,21 +15,21 @@ import play.mvc.WebSocket.Out;
 public class SensorTask extends TimerTask {
 
 	String name;
-	String temp;
+	String value;
 	long date;
 	Dao dao;
 	Sensor sensor;
-	boolean canPersists ;
+	boolean canPersists;
 
 	List<WebSocket.Out<String>> sockets;
 
 	public SensorTask(Sensor sensor, List<WebSocket.Out<String>> sockets, boolean canPersists) {
 		this.sockets = sockets;
-		temp = "unknown";
+		value = "unknown";
 		name = "Ludo";
 		dao = new Dao();
 		this.sensor = sensor;
-		this.canPersists = canPersists ;
+		this.canPersists = canPersists;
 	}
 
 	@Override
@@ -37,9 +37,8 @@ public class SensorTask extends TimerTask {
 		date = new Date().getTime();
 		String message;
 		try {
-			temp = sensor.read();
-			message = sensor.toJson(date, temp);
-			// System.out.println(sb.toString());
+			value = sensor.read();
+			message = sensor.toJson(date, value);
 			if (Logger.isDebugEnabled()) {
 				Logger.debug(message);
 			}
@@ -49,8 +48,17 @@ public class SensorTask extends TimerTask {
 				}
 			}
 			if (this.canPersists) {
-				dao.create(sensor.getType(), date, temp);
+				dao.create(sensor.getType(), date, value);
 			}
+			double humanValue = Math.round(Integer.valueOf(value) / 10) / 100.0;
+			if (humanValue > sensor.getMax()) {
+				Logger.debug("Too hot !!!!!");
+			} else if (humanValue < sensor.getMin()) {
+				Logger.debug("Too cold !!!!!");
+			} else {
+				Logger.debug("Normal !!!!!");
+			}
+
 		} catch (SQLException e) {
 			Logger.error("Persitence problem !", e);
 		} catch (SensorException e) {
