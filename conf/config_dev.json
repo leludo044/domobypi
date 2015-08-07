@@ -1,6 +1,7 @@
 {
     "id":"domobypi-hp",
-    "persistence": false,
+    "persistence": true,
+    "initDatabase": true,
        "sensors":[
         {
             "id":"random01",

@@ -7,16 +7,19 @@ import play.Logger;
 
 public class Module {
 
-	private String id ;
-	private boolean persistence ;
+	private String id;
+	private boolean persistence;
+	private boolean initDatabase;
 
-	private List<AbstractSensor> sensors ;
+	private List<AbstractSensor> sensors;
 
 	public Module() {
-		this.id = "undefined" ;
-		this.sensors = new ArrayList<AbstractSensor>() ;
+		this.id = "undefined";
+		this.sensors = new ArrayList<AbstractSensor>();
+		this.persistence = false;
+		this.initDatabase = false;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -46,7 +49,7 @@ public class Module {
 
 	public boolean hasSensors() {
 		// TODO Auto-generated method stub
-		return sensors.size()>0 ;
+		return sensors.size() > 0;
 	}
 
 	public boolean canPersists() {
@@ -56,12 +59,23 @@ public class Module {
 	public void setPersistence(boolean persistence) {
 		this.persistence = persistence;
 		if (this.persistence) {
-				Logger.info("Persistence enabled.");
+			Logger.info("Persistence enabled.");
 		} else {
-				Logger.info("Persistence disabled.");
+			Logger.info("Persistence disabled.");
 		}
-	}	
-	
-	
-	
+	}
+
+	public boolean canInitDatabase() {
+		return initDatabase;
+	}
+
+	public void setInitDatabase(boolean initDatabase) {
+		this.initDatabase = initDatabase;
+		if (this.initDatabase) {
+			Logger.info("Data initialization enabled.");
+		} else {
+			Logger.info("Data initialization disabled.");
+		}
+	}
+
 }

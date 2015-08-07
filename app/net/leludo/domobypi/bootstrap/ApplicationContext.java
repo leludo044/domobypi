@@ -2,12 +2,14 @@ package net.leludo.domobypi.bootstrap;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.leludo.domobypi.dao.MesureDao;
 import net.leludo.domobypi.model.AbstractSensor;
 import net.leludo.domobypi.model.Module;
 import net.leludo.domobypi.model.Sensor;
@@ -51,6 +53,9 @@ public final class ApplicationContext {
 			try {
 				module = mapper.readValue(configFile.openStream(), Module.class);
 				Logger.info("Module found : " + module);
+				if (module.canInitDatabase()) {
+					new MesureDao().initDatabase();
+				}
 				if (!module.hasSensors()) {
 					throw new ApplicationContextException("No sensor for this module !");
 				} else {
@@ -58,6 +63,8 @@ public final class ApplicationContext {
 				}
 			} catch (IOException e) {
 				throw new ApplicationContextException("Error while reading config.json", e);
+			} catch (SQLException e) {
+				throw new ApplicationContextException("Error while initializing database", e);
 			}
 		} else {
 			throw new ApplicationContextException("Config file not found !");

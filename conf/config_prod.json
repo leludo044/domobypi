@@ -1,6 +1,7 @@
 {
     "id":"domobypi",
     "persistence": false,
+    "initDatabase": false,
        "sensors":[
         {
             "id":"temp01",
