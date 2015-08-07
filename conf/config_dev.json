@@ -9,7 +9,8 @@
             "frequency":5000,
             "model":"inconnu",
             "min":21,
-            "max":24
+            "max":24,
+            "led":"red"
         },
         {
             "id":"random02",
@@ -19,5 +20,17 @@
             "min":18,
             "max":30
         }
+    ],
+    "leds":[
+    {
+    	"id":"red",
+    	"pinNumber":12,
+    	"type":"virtual"
+    },
+    {
+    	"id":"green",
+    	"pinNumber":0,
+    	"type":"virtual"
+    }
     ]
 }

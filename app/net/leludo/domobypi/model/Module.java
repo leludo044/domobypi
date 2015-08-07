@@ -1,7 +1,9 @@
 package net.leludo.domobypi.model;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import play.Logger;
 
@@ -12,12 +14,15 @@ public class Module {
 	private boolean initDatabase;
 
 	private List<AbstractSensor> sensors;
+	
+	private Map<String, AbstractLed> leds ;
 
 	public Module() {
 		this.id = "undefined";
 		this.sensors = new ArrayList<AbstractSensor>();
 		this.persistence = false;
 		this.initDatabase = false;
+		this.leds = new Hashtable<String, AbstractLed>() ;
 	}
 
 	public String getId() {
@@ -35,6 +40,8 @@ public class Module {
 		builder.append(id);
 		builder.append(", sensors=");
 		builder.append(sensors);
+		builder.append(", leds=");
+		builder.append(leds);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -45,11 +52,27 @@ public class Module {
 
 	public void setSensors(List<AbstractSensor> sensors) {
 		this.sensors = sensors;
+		for (AbstractSensor sensor : sensors) {
+			sensor.setModule(this);
+		}
 	}
 
 	public boolean hasSensors() {
-		// TODO Auto-generated method stub
 		return sensors.size() > 0;
+	}
+
+	public Map<String, AbstractLed> getLeds() {
+		return leds;
+	}
+
+	public void setLeds(List<AbstractLed> leds) {
+		for (AbstractLed led : leds) {
+			this.leds.put(led.getId(), led);
+		}
+	}
+
+	public boolean hasLeds() {
+		return leds.size() > 0;
 	}
 
 	public boolean canPersists() {

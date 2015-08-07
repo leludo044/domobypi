@@ -1,5 +1,6 @@
 package net.leludo.domobypi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -21,6 +22,10 @@ public abstract class AbstractSensor implements Sensor {
 	private String model;
 	private int min;
 	private int max;
+	private String led ;
+	
+	@JsonIgnore
+	private Module module ;
 
 	@Override
 	public String getId() {
@@ -80,6 +85,24 @@ public abstract class AbstractSensor implements Sensor {
 	@Override
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	public String getLed() {
+		return led;
+	}
+
+	@Override
+	public void setLed(String led) {
+		this.led = led;
+	}
+
+	public Module getModule() {
+		return module;
+	}
+
+	public void setModule(Module module) {
+		this.module = module;
 	}
 
 	@Override

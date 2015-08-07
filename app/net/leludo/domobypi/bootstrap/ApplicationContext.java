@@ -56,6 +56,9 @@ public final class ApplicationContext {
 				if (module.canInitDatabase()) {
 					new Dao().initDatabase();
 				}
+				if (!module.hasLeds()) {
+					Logger.warn("No led for this module !");					
+				}
 				if (!module.hasSensors()) {
 					throw new ApplicationContextException("No sensor for this module !");
 				} else {

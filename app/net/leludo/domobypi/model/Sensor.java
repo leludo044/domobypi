@@ -27,7 +27,15 @@ public interface Sensor {
 
 	void setType(String type);
 
+	String getLed();
+
+	void setLed(String led);
+
+	Module getModule();
+
+	void setModule(Module module);
+
 	String read() throws SensorException;
-	
+
 	String toJson(long timestamp, String value);
 }

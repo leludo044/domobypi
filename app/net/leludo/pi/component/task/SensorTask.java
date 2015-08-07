@@ -53,10 +53,19 @@ public class SensorTask extends TimerTask {
 			double humanValue = Math.round(Integer.valueOf(value) / 10) / 100.0;
 			if (humanValue > sensor.getMax()) {
 				Logger.debug("Too hot !!!!!");
+				if (sensor.getLed() != null) {
+					sensor.getModule().getLeds().get(sensor.getLed()).on();
+				}
 			} else if (humanValue < sensor.getMin()) {
 				Logger.debug("Too cold !!!!!");
+				if (sensor.getLed() != null) {
+					sensor.getModule().getLeds().get(sensor.getLed()).on();
+				}
 			} else {
 				Logger.debug("Normal !!!!!");
+				if (sensor.getLed() != null) {
+					sensor.getModule().getLeds().get(sensor.getLed()).off();
+				}
 			}
 
 		} catch (SQLException e) {
