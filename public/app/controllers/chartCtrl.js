@@ -3,7 +3,7 @@ angular.module('domobyPi').controller('ChartCtrl',
 
 	console.log($scope.sensor);
 	this.sensor = $scope.sensor ;
-	this.sensor.temps = [] ;
+	this.sensor.values = [] ;
 	this.sensor.min = 0 ;
 	this.sensor.max = 0 ;
 	this.sensor.current = 0 ;
@@ -21,9 +21,9 @@ angular.module('domobyPi').controller('ChartCtrl',
 					},
 				},
 				title : {
-					text : 'Sensor '+this.sensor.type+' '+this.sensor.id,
-					x : -20
-				// center
+					style : {
+						display : 'none'
+					}
 				},
 				xAxis : {
 					type : 'datetime',
@@ -38,13 +38,12 @@ angular.module('domobyPi').controller('ChartCtrl',
 		            minorTickColor: '#000000',
 		            minorTickWidth: 1,
 					title : {
-						text: null,
-						style: { "color": "#00002E", "fontWeight": "bold" }
+						text: null
 					}
 				},
 				yAxis : {
 					title : {
-						text : 'Temperature (°C)'
+						text : 'todo'
 					},
 					plotLines : [ {
 						value : 0,
@@ -59,15 +58,15 @@ angular.module('domobyPi').controller('ChartCtrl',
 					enabled: false
 				},
 				series : [ {
-					name : 'Home',
-					data : this.sensor.temps
+					data : this.sensor.values,
+					showInLegend: false
 				} ]
 			};
 
 			this.update = function(measure) {
 				//console.log("Receiving "+measure.temp+" on "+this.sensor.id);
 				var value = Math.round(measure.temp / 1000 * 100) / 100 ;
-				this.sensor.temps.push([measure.date, value]) ;
+				this.sensor.values.push([measure.date, value]) ;
 				
 				this.sensor.current = value ;
 				if (this.sensor.min == 0 && this.sensor.max == 0) {
