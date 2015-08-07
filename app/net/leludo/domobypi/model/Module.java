@@ -3,9 +3,12 @@ package net.leludo.domobypi.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import play.Logger;
+
 public class Module {
 
 	private String id ;
+	private boolean persistence ;
 
 	private List<AbstractSensor> sensors ;
 
@@ -44,5 +47,21 @@ public class Module {
 	public boolean hasSensors() {
 		// TODO Auto-generated method stub
 		return sensors.size()>0 ;
+	}
+
+	public boolean canPersists() {
+		return persistence;
+	}
+
+	public void setPersistence(boolean persistence) {
+		this.persistence = persistence;
+		if (this.persistence) {
+				Logger.info("Persistence enabled.");
+		} else {
+				Logger.info("Persistence disabled.");
+		}
 	}	
+	
+	
+	
 }

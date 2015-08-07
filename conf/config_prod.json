@@ -1,5 +1,6 @@
 {
     "id":"domobypi",
+    "persistence": false,
        "sensors":[
         {
             "id":"temp01",

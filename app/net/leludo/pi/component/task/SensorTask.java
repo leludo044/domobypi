@@ -19,21 +19,23 @@ public class SensorTask extends TimerTask {
 	long date;
 	MesureDao dao;
 	Sensor sensor;
+	boolean canPersists ;
 
-	List<WebSocket.Out<String>> sockets ;
+	List<WebSocket.Out<String>> sockets;
 
-	public SensorTask(Sensor sensor, List<WebSocket.Out<String>> sockets) {
+	public SensorTask(Sensor sensor, List<WebSocket.Out<String>> sockets, boolean canPersists) {
 		this.sockets = sockets;
 		temp = "unknown";
 		name = "Ludo";
 		dao = new MesureDao();
 		this.sensor = sensor;
+		this.canPersists = canPersists ;
 	}
 
 	@Override
 	public void run() {
 		date = new Date().getTime();
-		String message ;
+		String message;
 		try {
 			temp = sensor.read();
 			message = sensor.toJson(date, temp);
@@ -42,11 +44,13 @@ public class SensorTask extends TimerTask {
 				Logger.debug(message);
 			}
 			if (!this.sockets.isEmpty()) {
-				for (Out<String> out : this.sockets) {					
+				for (Out<String> out : this.sockets) {
 					out.write(message);
 				}
 			}
-			dao.create(sensor.getType(), date, temp);
+			if (this.canPersists) {
+				dao.create(sensor.getType(), date, temp);
+			}
 		} catch (SQLException e) {
 			Logger.error("Persitence problem !", e);
 		} catch (SensorException e) {
