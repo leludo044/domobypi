@@ -4,6 +4,9 @@ angular.module('domobyPi').controller('ChartCtrl',
 	console.log($scope.sensor);
 	this.sensor = $scope.sensor ;
 	this.sensor.temps = [] ;
+	this.sensor.min = 0 ;
+	this.sensor.max = 0 ;
+	this.sensor.current = 0 ;
 	
 	temperatureService.register(this);
 	
@@ -63,7 +66,26 @@ angular.module('domobyPi').controller('ChartCtrl',
 
 			this.update = function(measure) {
 				console.log("Receiving "+measure.temp+" on "+this.sensor.id);
-				this.sensor.temps.push([measure.date, Math.round(measure.temp / 1000 * 100) / 100]) ;
+				var value = Math.round(measure.temp / 1000 * 100) / 100 ;
+				this.sensor.temps.push([measure.date, value]) ;
+				
+				this.sensor.current = value ;
+				if (this.sensor.min == 0 && this.sensor.max == 0) {
+	                this.sensor.min = value ;
+	                this.sensor.max = value ;
+	            } else if (value < this.sensor.min ) {
+	                this.sensor.min = value ;
+	            }
+				else if (value > this.sensor.max) {
+	                this.sensor.max = value;				
+				}
+				/*
+	            if (value < this.sensor.min) {
+	                $scope.minTemp = $scope.temp;
+	            } else if ($scope.temp > $scope.maxTemp) {
+	                $scope.maxTemp = $scope.temp;
+	            }
+	            */
 			}
 			
 		} );

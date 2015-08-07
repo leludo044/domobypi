@@ -1,5 +1,10 @@
 <div ng-controller="ChartCtrl as chartCtrl" class="row">
-	<div class="col-md-8">
+	<div class="col-md-10">
 		<highchart id="chart1" config="chartCtrl.config" />
 	</div>
+	<div class="col-md-2 well">
+            <span class="label label-info">{{sensor.min}}</span>
+            <span class="label label-success">{{sensor.current}}</span>
+            <span class="label label-danger">{{sensor.max}}</span>
+        </div>
 </div>
