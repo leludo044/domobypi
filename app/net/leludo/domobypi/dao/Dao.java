@@ -10,7 +10,7 @@ import com.jcabi.jdbc.Outcome;
 import play.Logger;
 import play.db.DB;
 
-public class MesureDao {
+public class Dao {
 	DataSource ds;
 
 	public void create(String type, long date, String temp) throws SQLException {

@@ -9,7 +9,7 @@ import java.util.Timer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.leludo.domobypi.dao.MesureDao;
+import net.leludo.domobypi.dao.Dao;
 import net.leludo.domobypi.model.AbstractSensor;
 import net.leludo.domobypi.model.Module;
 import net.leludo.domobypi.model.Sensor;
@@ -54,7 +54,7 @@ public final class ApplicationContext {
 				module = mapper.readValue(configFile.openStream(), Module.class);
 				Logger.info("Module found : " + module);
 				if (module.canInitDatabase()) {
-					new MesureDao().initDatabase();
+					new Dao().initDatabase();
 				}
 				if (!module.hasSensors()) {
 					throw new ApplicationContextException("No sensor for this module !");

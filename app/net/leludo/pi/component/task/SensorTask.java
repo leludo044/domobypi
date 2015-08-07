@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
-import net.leludo.domobypi.dao.MesureDao;
+import net.leludo.domobypi.dao.Dao;
 import net.leludo.domobypi.model.Sensor;
 import net.leludo.pi.component.SensorException;
 import play.Logger;
@@ -17,7 +17,7 @@ public class SensorTask extends TimerTask {
 	String name;
 	String temp;
 	long date;
-	MesureDao dao;
+	Dao dao;
 	Sensor sensor;
 	boolean canPersists ;
 
@@ -27,7 +27,7 @@ public class SensorTask extends TimerTask {
 		this.sockets = sockets;
 		temp = "unknown";
 		name = "Ludo";
-		dao = new MesureDao();
+		dao = new Dao();
 		this.sensor = sensor;
 		this.canPersists = canPersists ;
 	}
