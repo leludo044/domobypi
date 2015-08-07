@@ -10,17 +10,34 @@ angular.module('domobyPi').controller('ChartCtrl',
 	
 			this.config = {
 				options : {
+					chart : {
+						type : 'spline'
+					},
 					tooltip : {
 						valueSuffix : '°C'
 					},
-				},
-				chart : {
-					renderTo : $("div#random1"),
 				},
 				title : {
 					text : 'Sensor '+this.sensor.type+' '+this.sensor.id,
 					x : -20
 				// center
+				},
+				xAxis : {
+					type : 'datetime',
+					dateTimeLabelFormats : {
+						month : '%e. %b',
+						year : '%b',
+					},
+					tickColor: '#00004A',
+				    tickWidth: 2,
+				    minorGridLineWidth: 0,
+		            minorTickInterval: 'auto',
+		            minorTickColor: '#000000',
+		            minorTickWidth: 1,
+					title : {
+						text: null,
+						style: { "color": "#00002E", "fontWeight": "bold" }
+					}
 				},
 				yAxis : {
 					title : {
@@ -35,11 +52,8 @@ angular.module('domobyPi').controller('ChartCtrl',
 				tooltip : {
 					valueSuffix : '°C'
 				},
-				legend : {
-					layout : 'vertical',
-					align : 'right',
-					verticalAlign : 'middle',
-					borderWidth : 0
+				legend: {
+					enabled: false
 				},
 				series : [ {
 					name : 'Home',
@@ -49,7 +63,7 @@ angular.module('domobyPi').controller('ChartCtrl',
 
 			this.update = function(measure) {
 				console.log("Receiving "+measure.temp+" on "+this.sensor.id);
-				this.sensor.temps.push(measure.temp) ;
+				this.sensor.temps.push([measure.date, Math.round(measure.temp / 1000 * 100) / 100]) ;
 			}
 			
 		} );
