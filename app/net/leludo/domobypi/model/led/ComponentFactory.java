@@ -18,34 +18,20 @@ public class ComponentFactory {
 	public static final ComponentFactory getInstance() {
 		if (instance == null) {
 			instance = new ComponentFactory();
-			Logger.debug("Component factory created...");
 		}
 		return instance;
 	}
 
 	public Component createComponent(final String type, final String name,
 			final PiPins pin) {
-		Logger.debug("Name="+name+ ", type="+type);
 		Component component = null;
 		if ("real".equals(type)) {
 			component = new RealLed(this, name);
 			component.connect(pin);
 		}
+		Logger.info("Component "+name+ " of type "+type+" created.");
 		return component;
 	}
-
-//	public Led createLed(final String type, final String name,
-//			final PiPins pin) {
-//		Logger.debug("Name="+name+ ", type="+type);
-//		Led led = null;
-//		if ("real".equals(type)) {
-//			led = new RealLed(this, name);
-//			((Component)led).connect(pin);
-//		} else if ("virtual".equals(type)) {
-//			led = new VirtualLed(name) ;
-//		}
-//		return led;
-//	}
 
 	public GpioController getGpioController() {
 		return gpio;

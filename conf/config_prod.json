@@ -6,7 +6,7 @@
         {
             "id":"temp01",
             "type":"temperature",
-            "frequency":5000,
+            "frequency":300000,
             "model":"inconnu",
             "min":20,
             "max":26,
