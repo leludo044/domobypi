@@ -1,19 +1,4 @@
-var testConnectivity = {
-	serveur : "localhost:9000",
-	ledstate : "/mock/ledstate",
-	led : "/mock/led",
-	websocket : "/socket"
-};
-
-var piConnectivity = {
-	serveur : "pi:9000",
-	ledstate : "/json/ledstate",
-	led : "/json/led",
-	websocket : "/socket"
-};
-
-var internetConnectivity = {
-	serveur : "leludo.dtdns.net:9000",
+var connectivity = {
 	ledstate : "/json/ledstate",
 	led : "/json/led",
 	websocket : "/socket"
@@ -21,7 +6,7 @@ var internetConnectivity = {
 
 var domobypi = angular.module('domobyPi', [ "highcharts-ng" ])
 
-domobypi.value("connect", testConnectivity);
+domobypi.value("connect", connectivity);
 
 domobypi.config([ '$controllerProvider', function($controllerProvider) {
 	$controllerProvider.allowGlobals();
@@ -32,7 +17,7 @@ angular.module('domobyPi').controller(
 		function($scope, $http, connect, temperatureService) {
 
 			ledState = function() {
-				$http.get('http://' + connect.serveur + connect.ledstate)
+				$http.get(connect.ledstate)
 						.success(function(data) {
 							$scope.led = data.led;
 						});
@@ -42,13 +27,13 @@ angular.module('domobyPi').controller(
 				return $scope.led == "on";
 			};
 			$scope.ledOn = function() {
-				$http.get('http://' + connect.serveur + connect.led + '/on')
+				$http.get(connect.led + '/on')
 						.success(function(data) {
 							$scope.led = data.led;
 						});
 			};
 			$scope.ledOff = function() {
-				$http.get('http://' + connect.serveur + connect.led + '/off')
+				$http.get(connect.led + '/off')
 						.success(function(data) {
 							$scope.led = data.led;
 						});
@@ -67,7 +52,7 @@ angular.module('domobyPi').controller(
 
 			temperatureService.start($scope);
 
-			$http.get('http://' + connect.serveur + '/json/sensors').success(
+			$http.get('/json/sensors').success(
 					function(data) {
 						$scope.sensors = data;
 					});
@@ -90,7 +75,7 @@ angular.module('domobyPi').factory(
 				self.start = function(scope) {
 					registeredScope = scope;
 					console.log("starting with " + registeredScope);
-					ws = new WebSocket("ws://" + connect.serveur
+					ws = new WebSocket("ws://" + location.host
 							+ connect.websocket);
 
 					ws.onopen = function() {
