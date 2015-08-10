@@ -9,30 +9,169 @@ import net.leludo.domobypi.model.led.AbstractLed;
 import net.leludo.domobypi.model.sensor.AbstractSensor;
 import play.Logger;
 
+/**
+ * domobyPi box Configuration : a module
+ *
+ */
 public class Module {
 
+	/** The module ID */
 	private String id;
+
+	/** Mark if the module provide persistence stuff */
 	private boolean persistence;
+
+	/**
+	 * Mark if the module can initialize the database itself (all data will be
+	 * lost)
+	 */
 	private boolean initDatabase;
 
+	/** Sensors list */
 	private List<AbstractSensor> sensors;
-	
-	private Map<String, AbstractLed> leds ;
 
+	/** Leds list */
+	private Map<String, AbstractLed> leds;
+
+	/**
+	 * Constructor. By default : no persistence, can not initialize database
+	 * itself, sensors list is created with zero sensor, leds list is created
+	 * with zero led and the id is "undefined"
+	 */
 	public Module() {
 		this.id = "undefined";
 		this.sensors = new ArrayList<AbstractSensor>();
 		this.persistence = false;
 		this.initDatabase = false;
-		this.leds = new Hashtable<String, AbstractLed>() ;
+		this.leds = new Hashtable<String, AbstractLed>();
 	}
 
+	/**
+	 * 
+	 * @return The module ID
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Fix the module ID
+	 * 
+	 * @param id
+	 *            The new module ID
+	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * 
+	 * @return The sensors list (can not be null)
+	 */
+	public List<AbstractSensor> getSensors() {
+		return sensors;
+	}
+
+	/**
+	 * Fix the sensors list
+	 * 
+	 * @param sensors
+	 *            The new sensors list. If null, a new empty sensors list is
+	 *            created instead
+	 */
+	public void setSensors(List<AbstractSensor> sensors) {
+		this.sensors = sensors;
+		for (AbstractSensor sensor : sensors) {
+			sensor.setModule(this);
+		}
+	}
+
+	/**
+	 * Say if the module contains sensors
+	 * 
+	 * @return true or false
+	 */
+	public boolean hasSensors() {
+		return sensors.size() > 0;
+	}
+
+	/**
+	 * 
+	 * @return The leds list (can not be null)
+	 */
+	public Map<String, AbstractLed> getLeds() {
+		return leds;
+	}
+
+	/**
+	 * Fix the leds list
+	 * 
+	 * @param leds
+	 *            The new leds list. If null, a new empty leds list is created
+	 *            instead
+	 */
+	public void setLeds(List<AbstractLed> leds) {
+		for (AbstractLed led : leds) {
+			this.leds.put(led.getId(), led);
+		}
+	}
+
+	/**
+	 * Say if the module contains leds
+	 * 
+	 * @return true or false
+	 */
+	public boolean hasLeds() {
+		return leds.size() > 0;
+	}
+
+	/**
+	 * Say if the module can provide persistence stuff
+	 * 
+	 * @return true ou false
+	 */
+	public boolean canPersists() {
+		return persistence;
+	}
+
+	/**
+	 * Fix if the module can provide persistence stuff
+	 * 
+	 * @param persistence
+	 *            true or false
+	 */
+	public void setPersistence(boolean persistence) {
+		this.persistence = persistence;
+		if (this.persistence) {
+			Logger.info("Persistence enabled.");
+		} else {
+			Logger.info("Persistence disabled.");
+		}
+	}
+
+	/**
+	 * Say if the module can initialize the database itself.
+	 * 
+	 * @return true ou false
+	 */
+	public boolean canInitDatabase() {
+		return initDatabase;
+	}
+
+	/**
+	 * Fix if the module can initialize the database itself. If true all the
+	 * data will be lost at startup
+	 * 
+	 * @param initDatabase
+	 *            true or false
+	 */
+	public void setInitDatabase(boolean initDatabase) {
+		this.initDatabase = initDatabase;
+		if (this.initDatabase) {
+			Logger.info("Data initialization enabled.");
+		} else {
+			Logger.info("Data initialization disabled.");
+		}
 	}
 
 	@Override
@@ -47,60 +186,4 @@ public class Module {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	public List<AbstractSensor> getSensors() {
-		return sensors;
-	}
-
-	public void setSensors(List<AbstractSensor> sensors) {
-		this.sensors = sensors;
-		for (AbstractSensor sensor : sensors) {
-			sensor.setModule(this);
-		}
-	}
-
-	public boolean hasSensors() {
-		return sensors.size() > 0;
-	}
-
-	public Map<String, AbstractLed> getLeds() {
-		return leds;
-	}
-
-	public void setLeds(List<AbstractLed> leds) {
-		for (AbstractLed led : leds) {
-			this.leds.put(led.getId(), led);
-		}
-	}
-
-	public boolean hasLeds() {
-		return leds.size() > 0;
-	}
-
-	public boolean canPersists() {
-		return persistence;
-	}
-
-	public void setPersistence(boolean persistence) {
-		this.persistence = persistence;
-		if (this.persistence) {
-			Logger.info("Persistence enabled.");
-		} else {
-			Logger.info("Persistence disabled.");
-		}
-	}
-
-	public boolean canInitDatabase() {
-		return initDatabase;
-	}
-
-	public void setInitDatabase(boolean initDatabase) {
-		this.initDatabase = initDatabase;
-		if (this.initDatabase) {
-			Logger.info("Data initialization enabled.");
-		} else {
-			Logger.info("Data initialization disabled.");
-		}
-	}
-
 }

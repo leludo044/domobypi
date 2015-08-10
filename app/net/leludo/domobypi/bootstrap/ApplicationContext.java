@@ -20,33 +20,36 @@ import play.Logger;
 import play.mvc.WebSocket;
 
 /**
- * Application context management
+ * Root class for model management (configuration, sensors and leds description)
  *
  */
 public final class ApplicationContext {
 
-	static ApplicationContext instance ;
-	
-	List<WebSocket.Out<String>> sockets ;
-	
+	/** Unique instance of the application */
+	static ApplicationContext instance;
+
+	/** Open websockets lists */
+	List<WebSocket.Out<String>> sockets;
+
 	/** Module */
 	private Module module;
 
 	/**
-	 * Constructor
+	 * Constructor. By default the module is empty and the sockets list is
+	 * created with zero element
 	 */
 	private ApplicationContext() {
 		module = new Module();
-		sockets = new ArrayList<WebSocket.Out<String>>() ;
+		sockets = new ArrayList<WebSocket.Out<String>>();
 	}
 
 	/**
-	 * Load context
+	 * Load context form a json config file
 	 * 
 	 * @param configFile
 	 *            Config file url
 	 * @throws ApplicationContextException
-	 *             Exception for config file readinf problem
+	 *             Exception for config file reading problem
 	 */
 	public void load(URL configFile) throws ApplicationContextException {
 
@@ -59,12 +62,12 @@ public final class ApplicationContext {
 					new Dao().initDatabase();
 				}
 				if (!module.hasLeds()) {
-					Logger.warn("No led for this module !");					
+					Logger.warn("No led for this module !");
 				}
 				if (!module.hasSensors()) {
 					throw new ApplicationContextException("No sensor for this module !");
 				} else {
-					start() ;
+					start();
 				}
 			} catch (IOException e) {
 				throw new ApplicationContextException("Error while reading config.json", e);
@@ -75,37 +78,60 @@ public final class ApplicationContext {
 			throw new ApplicationContextException("Config file not found !");
 		}
 	}
-	
+
 	private void start() {
-		
+
 		for (Sensor sensor : this.module.getSensors()) {
-			final Timer t = new Timer("sensor-"+sensor.getId());
+			final Timer t = new Timer("sensor-" + sensor.getId());
 			t.schedule(new SensorTask(sensor, this.sockets, module.canPersists()), 0, sensor.getFrequency());
 		}
 	}
-	
+
+	/**
+	 * Return the unique instance. Create one if not exists.
+	 * 
+	 * @return The unique instance
+	 */
 	public static ApplicationContext getInstance() {
 		if (instance == null) {
-			instance = new ApplicationContext() ;
+			instance = new ApplicationContext();
 		}
-		return instance ;
+		return instance;
 	}
-	
+
+	/**
+	 * Register a websocket opened by an HTML client
+	 * 
+	 * @param ws
+	 *            The websocket to register
+	 */
 	public void register(WebSocket.Out<String> ws) {
-		sockets.add(ws) ;
-		Logger.info("Registering "+ws.toString());
+		sockets.add(ws);
+		Logger.info("Registering " + ws.toString());
 	}
 
+	/**
+	 * Unregister a websocket closed by an HTML client
+	 * 
+	 * @param ws
+	 *            The websocket to unregister
+	 */
 	public void unregister(WebSocket.Out<String> ws) {
-		this.sockets.remove(ws) ;
-		Logger.info("Unregistering "+ws.toString());
+		this.sockets.remove(ws);
+		Logger.info("Unregistering " + ws.toString());
 	}
 
+	/**
+	 * @return The sensors list associated with this application context
+	 */
 	public List<AbstractSensor> getSensors() {
 		return module.getSensors();
-		
+
 	}
-	
+
+	/**
+	 * @return The leds list associated with this application context
+	 */
 	public Map<String, AbstractLed> getLeds() {
 		return module.getLeds();
 	}
