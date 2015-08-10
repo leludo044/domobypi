@@ -12,7 +12,7 @@ public enum PiPins {
 		this.pin = pin;
 	}
 	
-	Pin getPin()  {
+	public Pin getPin()  {
 		return this.pin;
 	}
 }

@@ -9,7 +9,15 @@
             "frequency":5000,
             "model":"inconnu",
             "min":20,
-            "max":26
+            "max":26,
+            "led":"red"
         }
+    ],
+    "leds":[
+    {
+    	"id":"red",
+    	"pinNumber":12,
+    	"type":"real"
+    }
     ]
 }

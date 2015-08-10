@@ -1,9 +1,10 @@
-package net.leludo.pi.component;
+package net.leludo.domobypi.model;
 
-public class Led extends Component {
+public class RealLed extends Component {
 
-	protected Led(ComponentFactory manager, String name) {
+	protected RealLed(ComponentFactory manager, String name) {
 		super(manager, name);
+		this.setId(name);
 	}
 
 	public void on() {
@@ -14,6 +15,14 @@ public class Led extends Component {
 		pin.low();
 	}
 	
+	public boolean isOn() {
+		return pin.isHigh() ;
+	}
+
+	public String getState() {
+		return isOn() ? "on" : "off";
+	}
+	
 	public void blink(final int nb, final int seconds) throws InterruptedException {
 		for (int i = 0; i<nb; i++) {
 			this.on() ;
@@ -22,13 +31,4 @@ public class Led extends Component {
 			Thread.sleep(seconds*1000);
 		}
 	}
-
-	public boolean isOn() {
-		return pin.isHigh() ;
-	}
-
-	public String getState() {
-		return isOn() ? "on" : "off";
-	}
-
 }

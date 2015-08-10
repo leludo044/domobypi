@@ -1,18 +1,13 @@
 package net.leludo.domobypi.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import net.leludo.pi.component.TemperatureSensor;
+import net.leludo.pi.component.PiPins;
 
-@JsonTypeInfo(  
-	    use = JsonTypeInfo.Id.NAME,  
-	    include = JsonTypeInfo.As.PROPERTY,  
-	    property = "type")  
-	@JsonSubTypes({  
-	    @Type(value = VirtualLed.class, name = "virtual")})
-public abstract class AbstractLed implements Led {
+public abstract class AbstractLed implements net.leludo.domobypi.model.Led {
 
 	String id;
 	int pinNumber;
@@ -22,6 +17,22 @@ public abstract class AbstractLed implements Led {
 
 	public abstract void off() ;
 
+	@JsonCreator
+	public static AbstractLed createInstance(@JsonProperty("id") String id, @JsonProperty("pinNumber") int pinNumber,
+			@JsonProperty("type") String type) {
+		AbstractLed led = null;
+		if (type.equals("virtual")) {
+			led = new VirtualLed();
+			led.setId(id);
+			led.setPinNumber(pinNumber);
+			led.setType(type);
+		} else if (type.equals("real")) {
+			ComponentFactory manager = ComponentFactory.getInstance() ;
+		    led = (AbstractLed)manager.createComponent(type, id, PiPins.TWELVE) ;
+		}
+		return led ;
+	}
+	
 	@Override
 	public String getId() {
 		return this.id;

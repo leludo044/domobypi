@@ -16,4 +16,6 @@ public interface Led {
 	void on() ;
 
 	void off() ;
+	
+	public String getState() ;
 }

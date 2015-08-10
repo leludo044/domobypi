@@ -21,7 +21,7 @@ var internetConnectivity = {
 
 var domobypi = angular.module('domobyPi', [ "highcharts-ng" ])
 
-domobypi.value("connect", testConnectivity);
+domobypi.value("connect", piConnectivity);
 
 domobypi.config([ '$controllerProvider', function($controllerProvider) {
 	$controllerProvider.allowGlobals();
