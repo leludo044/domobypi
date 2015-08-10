@@ -1,5 +1,9 @@
 package net.leludo.domobypi.model.sensor;
 
+/**
+ * Implementation of a random sensor. Value between 20000 and 25000. 
+ *
+ */
 public class RandomSensor extends AbstractSensor {
 
 	@Override

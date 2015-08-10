@@ -7,24 +7,38 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import net.leludo.domobypi.model.Module;
 
-@JsonTypeInfo(  
-	    use = JsonTypeInfo.Id.NAME,  
-	    include = JsonTypeInfo.As.PROPERTY,  
-	    property = "type")  
-	@JsonSubTypes({  
-	    @Type(value = RandomSensor.class, name = "random"),
-	    @Type(value = TemperatureSensor.class, name = "temperature")})
+/**
+ * Implementation of common Sensor methods
+ *
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({ @Type(value = RandomSensor.class, name = "random"),
+		@Type(value = TemperatureSensor.class, name = "temperature") })
 public abstract class AbstractSensor implements Sensor {
+
+	/** Sensor ID */
 	private String id;
+
+	/** Sensor type */
 	private String type;
+
+	/** Sensor read frequency in ms */
 	private long frequency;
+
+	/** Sensor model */
 	private String model;
+
+	/** Sensor min range value of comfort */
 	private int min;
+
+	/** Sensor max range value of comfort */
 	private int max;
-	private String led ;
-	
+
+	/** Led ID which will be used to notify out of range */
+	private String led;
+
 	@JsonIgnore
-	private Module module ;
+	private Module module;
 
 	@Override
 	public String getId() {
@@ -63,7 +77,9 @@ public abstract class AbstractSensor implements Sensor {
 
 	@Override
 	public void setMin(int min) {
-		this.min = min;
+		if (min <= max) {
+			this.min = min;
+		}
 	}
 
 	@Override
@@ -73,17 +89,9 @@ public abstract class AbstractSensor implements Sensor {
 
 	@Override
 	public void setMax(int max) {
-		this.max = max;
-	}
-
-	@Override
-	public String getType() {
-		return type;
-	}
-
-	@Override
-	public void setType(String type) {
-		this.type = type;
+		if (max >= min) {
+			this.max = max;
+		}
 	}
 
 	@Override
@@ -105,7 +113,7 @@ public abstract class AbstractSensor implements Sensor {
 	}
 
 	@Override
-	public abstract String read() throws SensorException ;
+	public abstract String read() throws SensorException;
 
 	@Override
 	public String toString() {
@@ -125,10 +133,10 @@ public abstract class AbstractSensor implements Sensor {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 	@Override
 	public String toJson(long timestamp, String value) {
-		StringBuffer sb = new StringBuffer() ;
+		StringBuffer sb = new StringBuffer();
 		sb.append("{");
 		sb.append("\"").append("id").append("\"");
 		sb.append(":").append("\"").append(id).append("\"");
@@ -139,7 +147,7 @@ public abstract class AbstractSensor implements Sensor {
 		sb.append("\"").append("date").append("\"");
 		sb.append(":").append(timestamp);
 		sb.append("}");
-		
-		return sb.toString() ;
+
+		return sb.toString();
 	}
 }

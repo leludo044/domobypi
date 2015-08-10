@@ -4,14 +4,20 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Implementation of a physical temperature sensor model BS18D20. 
+ *
+ */
 public class TemperatureSensor extends AbstractSensor {
 
+	/** Reader for file system access */
+	BufferedReader br;
+	
 	@Override
 	public String getType() {
 		return "temperature";
 	}
 
-	BufferedReader br;
 
 	@Override
 	public String read() throws SensorException {
