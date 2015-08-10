@@ -76,13 +76,14 @@ public class Module {
 	 * Fix the sensors list
 	 * 
 	 * @param sensors
-	 *            The new sensors list. If null, a new empty sensors list is
-	 *            created instead
+	 *            The new sensors list. If null, do nothing
 	 */
 	public void setSensors(List<AbstractSensor> sensors) {
-		this.sensors = sensors;
-		for (AbstractSensor sensor : sensors) {
-			sensor.setModule(this);
+		if (sensors != null) {
+			this.sensors = sensors;
+			for (AbstractSensor sensor : sensors) {
+				sensor.setModule(this);
+			}
 		}
 	}
 
@@ -107,12 +108,13 @@ public class Module {
 	 * Fix the leds list
 	 * 
 	 * @param leds
-	 *            The new leds list. If null, a new empty leds list is created
-	 *            instead
+	 *            The new leds list. If null, do nothing
 	 */
 	public void setLeds(List<AbstractLed> leds) {
-		for (AbstractLed led : leds) {
-			this.leds.put(led.getId(), led);
+		if (leds != null) {
+			for (AbstractLed led : leds) {
+				this.leds.put(led.getId(), led);
+			}
 		}
 	}
 
@@ -130,7 +132,7 @@ public class Module {
 	 * 
 	 * @return true ou false
 	 */
-	public boolean canPersists() {
+	public boolean canPersist() {
 		return persistence;
 	}
 
@@ -183,6 +185,10 @@ public class Module {
 		builder.append(sensors);
 		builder.append(", leds=");
 		builder.append(leds);
+		builder.append(", canPersist=");
+		builder.append(canPersist());
+		builder.append(", canInitDatabase=");
+		builder.append(canInitDatabase());
 		builder.append("]");
 		return builder.toString();
 	}

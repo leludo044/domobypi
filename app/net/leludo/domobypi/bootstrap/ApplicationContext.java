@@ -83,7 +83,7 @@ public final class ApplicationContext {
 
 		for (Sensor sensor : this.module.getSensors()) {
 			final Timer t = new Timer("sensor-" + sensor.getId());
-			t.schedule(new SensorTask(sensor, this.sockets, module.canPersists()), 0, sensor.getFrequency());
+			t.schedule(new SensorTask(sensor, this.sockets, module.canPersist()), 0, sensor.getFrequency());
 		}
 	}
 
