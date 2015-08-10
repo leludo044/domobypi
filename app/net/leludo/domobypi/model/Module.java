@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import net.leludo.domobypi.model.led.AbstractLed;
+import net.leludo.domobypi.model.sensor.AbstractSensor;
 import play.Logger;
 
 public class Module {

@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import net.leludo.domobypi.model.Led;
-import net.leludo.domobypi.model.VirtualLed;
-import net.leludo.pi.component.SensorException;
-import net.leludo.pi.component.TemperatureSensor;
+import net.leludo.domobypi.bootstrap.ApplicationContext;
+import net.leludo.domobypi.model.led.AbstractLed;
+import net.leludo.domobypi.model.led.Led;
+import net.leludo.domobypi.model.led.VirtualLed;
+import net.leludo.domobypi.model.sensor.SensorException;
+import net.leludo.domobypi.model.sensor.TemperatureSensor;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,12 +18,7 @@ import play.mvc.Result;
 
 public class JsonController extends Controller
 {
-	
-//    private static ComponentFactory manager = ComponentFactory.getInstance() ;
-//    private static Led led = (Led)manager.createComponent("led", "Red led", PiPins.TWELVE) ;
-	
-	private static Led led = new VirtualLed() ;
-    
+	private static Led led = ApplicationContext.getInstance().getLeds().get("red") ;
 
     public static Result led(String sw)
     {

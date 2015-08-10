@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.TimerTask;
 
 import net.leludo.domobypi.dao.Dao;
-import net.leludo.domobypi.model.Sensor;
-import net.leludo.pi.component.SensorException;
+import net.leludo.domobypi.model.sensor.Sensor;
+import net.leludo.domobypi.model.sensor.SensorException;
 import play.Logger;
 import play.mvc.WebSocket;
 import play.mvc.WebSocket.Out;

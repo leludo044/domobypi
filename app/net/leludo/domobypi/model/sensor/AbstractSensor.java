@@ -1,12 +1,11 @@
-package net.leludo.domobypi.model;
+package net.leludo.domobypi.model.sensor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import net.leludo.pi.component.SensorException;
-import net.leludo.pi.component.TemperatureSensor;
+import net.leludo.domobypi.model.Module;
 
 @JsonTypeInfo(  
 	    use = JsonTypeInfo.Id.NAME,  

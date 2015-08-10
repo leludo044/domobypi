@@ -1,6 +1,4 @@
-package net.leludo.domobypi.model;
-
-import net.leludo.pi.component.SensorException;
+package net.leludo.domobypi.model.sensor;
 
 public class RandomSensor extends AbstractSensor {
 

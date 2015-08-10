@@ -1,4 +1,4 @@
-package net.leludo.domobypi.model;
+package net.leludo.domobypi.model.led;
 
 public interface Led {
 	String getId();

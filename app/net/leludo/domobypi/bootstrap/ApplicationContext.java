@@ -5,14 +5,16 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.leludo.domobypi.dao.Dao;
-import net.leludo.domobypi.model.AbstractSensor;
 import net.leludo.domobypi.model.Module;
-import net.leludo.domobypi.model.Sensor;
+import net.leludo.domobypi.model.led.AbstractLed;
+import net.leludo.domobypi.model.sensor.AbstractSensor;
+import net.leludo.domobypi.model.sensor.Sensor;
 import net.leludo.pi.component.task.SensorTask;
 import play.Logger;
 import play.mvc.WebSocket;
@@ -102,5 +104,9 @@ public final class ApplicationContext {
 	public List<AbstractSensor> getSensors() {
 		return module.getSensors();
 		
+	}
+	
+	public Map<String, AbstractLed> getLeds() {
+		return module.getLeds();
 	}
 }

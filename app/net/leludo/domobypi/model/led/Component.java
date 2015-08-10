@@ -1,10 +1,10 @@
-package net.leludo.domobypi.model;
+package net.leludo.domobypi.model.led;
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 
-import net.leludo.pi.component.PiPins;
+import net.leludo.pi.hardware.PiPins;
 
 public abstract class Component extends AbstractLed {
 

@@ -24,12 +24,10 @@
     "leds":[
     {
     	"id":"red",
-    	"pinNumber":12,
     	"type":"virtual"
     },
     {
     	"id":"green",
-    	"pinNumber":0,
     	"type":"virtual"
     }
     ]

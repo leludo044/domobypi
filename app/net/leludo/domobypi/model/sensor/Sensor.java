@@ -1,6 +1,6 @@
-package net.leludo.domobypi.model;
+package net.leludo.domobypi.model.sensor;
 
-import net.leludo.pi.component.SensorException;
+import net.leludo.domobypi.model.Module;
 
 public interface Sensor {
 	String getId();

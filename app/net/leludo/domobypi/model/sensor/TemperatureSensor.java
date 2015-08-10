@@ -1,10 +1,8 @@
-package net.leludo.pi.component;
+package net.leludo.domobypi.model.sensor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import net.leludo.domobypi.model.AbstractSensor;
 
 public class TemperatureSensor extends AbstractSensor {
 

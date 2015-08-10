@@ -1,4 +1,4 @@
-package net.leludo.pi.component;
+package net.leludo.domobypi.model.sensor;
 
 public class SensorException extends Exception {
 

@@ -3,8 +3,8 @@ package net.leludo.pi.timer;
 import java.util.Date;
 import java.util.TimerTask;
 
-import net.leludo.pi.component.SensorException;
-import net.leludo.pi.component.TemperatureSensor;
+import net.leludo.domobypi.model.sensor.SensorException;
+import net.leludo.domobypi.model.sensor.TemperatureSensor;
 import play.mvc.WebSocket.Out;
 
 public class SensorTimer extends TimerTask {

@@ -1,4 +1,4 @@
-package net.leludo.pi.component;
+package net.leludo.pi.hardware;
 
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;

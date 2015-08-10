@@ -1,9 +1,9 @@
-package net.leludo.domobypi.model;
+package net.leludo.domobypi.model.led;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 
-import net.leludo.pi.component.PiPins;
+import net.leludo.pi.hardware.PiPins;
 import play.Logger;
 
 public class ComponentFactory {
@@ -23,16 +23,29 @@ public class ComponentFactory {
 		return instance;
 	}
 
-	public net.leludo.domobypi.model.Component createComponent(final String type, final String name,
+	public Component createComponent(final String type, final String name,
 			final PiPins pin) {
 		Logger.debug("Name="+name+ ", type="+type);
 		Component component = null;
 		if ("real".equals(type)) {
 			component = new RealLed(this, name);
 			component.connect(pin);
-		} 
+		}
 		return component;
 	}
+
+//	public Led createLed(final String type, final String name,
+//			final PiPins pin) {
+//		Logger.debug("Name="+name+ ", type="+type);
+//		Led led = null;
+//		if ("real".equals(type)) {
+//			led = new RealLed(this, name);
+//			((Component)led).connect(pin);
+//		} else if ("virtual".equals(type)) {
+//			led = new VirtualLed(name) ;
+//		}
+//		return led;
+//	}
 
 	public GpioController getGpioController() {
 		return gpio;

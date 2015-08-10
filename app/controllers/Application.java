@@ -1,6 +1,7 @@
 package controllers;
 
-import net.leludo.pi.component.mock.Led;
+import net.leludo.domobypi.model.led.AbstractLed;
+import net.leludo.domobypi.model.led.Led;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -9,7 +10,7 @@ import views.html.index;
 
 public class Application extends Controller
 {
-    private static Led led = new Led("red");
+    private static Led led = AbstractLed.createInstance("test", 0, "virtual");
 
     public static Result index()
     {
