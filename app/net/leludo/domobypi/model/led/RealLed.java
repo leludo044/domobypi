@@ -16,12 +16,20 @@ public class RealLed extends AbstractLed implements GpioConnected {
 	
 	/**
 	 * Constructor
-	 * @param manager
 	 * @param id The led ID 
 	 */
 	protected RealLed(String id) {
 		this.setId(id);
 		this.setPinNumber(0);
+	}
+
+	/**
+	 * Constructor
+	 * @param id The led ID 
+	 */
+	protected RealLed(String id, int pinNumber) {
+		this.setId(id);
+		this.setPinNumber(pinNumber);
 	}
 
 	@Override

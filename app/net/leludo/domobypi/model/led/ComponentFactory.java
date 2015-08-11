@@ -49,7 +49,7 @@ public class ComponentFactory {
 			final PiPins pin) {
 		Led component = null;
 		if ("real".equals(type)) {
-			component = new RealLed(id);
+			component = new RealLed(id, pin.getPinNumber());
 			this.connect((RealLed)component, component.getId(), pin);
 		}
 		Logger.info("Component "+id+ " of type "+type+" created.");

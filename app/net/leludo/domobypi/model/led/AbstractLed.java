@@ -33,7 +33,7 @@ public abstract class AbstractLed implements Led {
 			led = new VirtualLed(id);
 		} else if (type.equals("real")) {
 			ComponentFactory manager = ComponentFactory.getInstance();
-			led = (AbstractLed) manager.createComponent(type, id, PiPins.TWELVE);
+			led = (AbstractLed) manager.createComponent(type, id, PiPins.fromPinNumber(pinNumber));
 		}
 		return led;
 	}
