@@ -1,21 +1,48 @@
 package net.leludo.domobypi.model.led;
 
+/**
+ * Leds stuff
+ */
 public interface Led {
+	/**
+	 * 
+	 * @return The led ID
+	 */
 	String getId();
 
+	/**
+	 * Fix the sensor ID
+	 * 
+	 * @param id
+	 *            The new sensor ID
+	 */
 	void setId(String id);
 
-	int getPinNumber();
-
-	void setPinNumber(int pinNumber);
-
+	/**
+	 * 
+	 * @return The sensor type. At the moment : virtual or real
+	 */
 	String getType();
 
-	void setType(String type);
-	
-	void on() ;
+	/**
+	 * Light on the led
+	 */
+	void on();
 
-	void off() ;
-	
-	public String getState() ;
+	/**
+	 * Light off the led
+	 */
+	void off();
+
+	/**
+	 * 
+	 * @return If the led is on (true) or not (false)
+	 */
+	boolean isOn();
+
+	/**
+	 * 
+	 * @return The led state : "on" or "off"
+	 */
+	public String getState();
 }
