@@ -73,22 +73,27 @@ public class RealLed extends AbstractLed implements GpioConnected {
 	public String getType() {
 		return "real" ;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("SimpleLed [id=");
-		builder.append(id);
-		builder.append(", pinNumber=");
-		builder.append(pinNumber);
-		builder.append("]");
-		return builder.toString();
-	}
 
 	@Override
 	public void connect(GpioPinDigitalOutput pin) {
 		this.pin = pin ;
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RealLed [id=");
+		builder.append(id);
+		builder.append(", pinNumber=");
+		builder.append(pinNumber);
+		builder.append(", pin=");
+		builder.append(pin);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

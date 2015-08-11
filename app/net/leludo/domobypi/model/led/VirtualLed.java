@@ -47,4 +47,18 @@ public class VirtualLed extends AbstractLed {
 	public String getType() {
 		return "virtual" ;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("VirtualLed [id=");
+		builder.append(id);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append("]");
+		return builder.toString();
+	}
 }
