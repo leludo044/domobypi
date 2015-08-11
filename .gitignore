@@ -15,3 +15,4 @@ dist
 /.settings
 bin
 domobypi.db.h2.db 
+domobypi.db.trace.db 
