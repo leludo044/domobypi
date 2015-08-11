@@ -14,5 +14,5 @@ dist
 /RUNNING_PID
 /.settings
 bin
-domobypi.db.h2.db 
-domobypi.db.trace.db 
+domobypi.db.h2.db
+domobypi.db.trace.db
