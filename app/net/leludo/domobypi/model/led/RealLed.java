@@ -1,21 +1,25 @@
 package net.leludo.domobypi.model.led;
 
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+
 /**
  * Implementation of a real connected to Raspberry PI GPIO. 
  *
  */
-public class RealLed extends Component {
+public class RealLed extends AbstractLed implements GpioConnected {
 
 	/** Pin the led is connected on */
 	private int pinNumber ;
+	
+	/** Gpio from pinNumber */
+	private GpioPinDigitalOutput pin ;
 	
 	/**
 	 * Constructor
 	 * @param manager
 	 * @param id The led ID 
 	 */
-	protected RealLed(ComponentFactory manager, String id) {
-		super(manager, id);
+	protected RealLed(String id) {
 		this.setId(id);
 		this.setPinNumber(0);
 	}
@@ -79,6 +83,12 @@ public class RealLed extends Component {
 		builder.append(pinNumber);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public void connect(GpioPinDigitalOutput pin) {
+		this.pin = pin ;
+		
 	}
 
 }

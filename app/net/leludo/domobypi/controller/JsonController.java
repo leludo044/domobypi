@@ -5,9 +5,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import net.leludo.domobypi.bootstrap.ApplicationContext;
-import net.leludo.domobypi.model.led.AbstractLed;
 import net.leludo.domobypi.model.led.Led;
-import net.leludo.domobypi.model.led.VirtualLed;
 import net.leludo.domobypi.model.sensor.SensorException;
 import net.leludo.domobypi.model.sensor.TemperatureSensor;
 import play.libs.Json;

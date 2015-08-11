@@ -1,5 +1,3 @@
-import java.net.URL;
-
 import net.leludo.domobypi.bootstrap.ApplicationContext;
 import net.leludo.domobypi.bootstrap.ApplicationContextException;
 import play.Application;

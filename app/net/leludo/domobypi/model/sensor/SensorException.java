@@ -1,5 +1,6 @@
 package net.leludo.domobypi.model.sensor;
 
+@SuppressWarnings("serial")
 public class SensorException extends Exception {
 
 	public SensorException() {
