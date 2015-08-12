@@ -1,0 +1,35 @@
+{
+    "id":"domobypi-local",
+    "persistence": false,
+    "initDatabase": false,
+       "sensors":[
+        {
+            "id":"random01",
+            "type":"random",
+            "frequency":5000,
+            "model":"inconnu",
+            "min":21,
+            "max":24,
+            "led":"red"
+        },
+        {
+            "id":"random02",
+            "type":"random",
+            "frequency":10000,
+            "model":"inconnu",
+            "min":18,
+            "max":30
+        }
+    ],
+    "leds":[
+    {
+    	"id":"red",
+    	"type":"virtual"
+    },
+    {
+    	"id":"green",
+    	"type":"virtual"
+    }
+    ]
+
+}
